@@ -191,3 +191,25 @@ u8 rc522_request(uint8_t reqMode, uint8_t *TagType){
 	return status;
 }
 
+void get_card_id(void){
+	state_ment = rc522_request(0x26, str_1);
+	if (state_ment != 0)
+	{
+			return;
+	}
+	state_ment = rc522_anticol(str_1);
+	if (state_ment == 0)
+	{
+			memcpy(card_id, str_1, 5);
+			card_id2[0] = card_id[2];
+			card_id2[1] = card_id[3];
+			card_id2[2] = card_id[4];
+   }
+}
+
+void bus_card(void){
+	state_ment = rc522_request(0x26, str_1);
+	state_ment = rc522_anticol(str_1);
+	memcpy(card_id, str_1, 5);
+}
+
